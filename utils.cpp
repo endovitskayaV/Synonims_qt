@@ -34,12 +34,44 @@
         return buffer.str();
     }
 
-    void Utils::findAll(QMap<int, QString>& words,  QString &str, QMap<int, QString>* out) {
-        for (int key : words.keys()) {
-            if (words.value(key)==str){
+    void Utils::findAll(QMap<int, QString>* words,  QString &str, QMap<int, QString>* out) {
+        for (int key : words->keys()) {
+            if (words->value(key)==str){
                 out->insert(key, str);
             }
         }
     }
 
+    void Utils::replaceWithSynonims(QString &words, QMap<int, QString> *foundWords, const QStringList &synonims) {
+        for (int key : foundWords->keys()) {
+            int chosenSynonimIndex = 0;
+            do {
+                chosenSynonimIndex=rand() % ((synonims.size()));
+            } while (synonims[chosenSynonimIndex] == foundWords->value(key));
+            words.replace(key, foundWords->value(key).size(), synonims[chosenSynonimIndex]);
+        }
+    }
 
+    void Utils::createWordsMap(QMap<int, QString>* wordsMap, QString &words){
+        QStringList symb={",", ".", " ", "!", "'", "...", "?", "/", "(", ")"};
+
+        int index;
+        QString w;
+        int i=0;
+        while(i<words.size()){
+            while (i<words.size() && symb.contains(words.at(i))){
+                i++;
+             }
+
+            if (i<words.size()){
+                index=i;
+                w.clear();
+                while (i<words.size() && !symb.contains(words.at(i))){
+                    w.append(words.at(i));
+                    i++;
+                 }
+              wordsMap->insert(index, w);
+            }
+        }
+
+    }

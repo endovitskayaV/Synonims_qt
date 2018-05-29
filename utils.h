@@ -31,8 +31,9 @@ public:
     static void removeEmpty(QStringList &list);
     static string readFile(const string &path);
     static void saveToFile(const QString &path, const QString &text);
-    static void findAll(QMap<int, QString>& words,  QString &str, QMap<int, QString>* out);
-
+    static void findAll(QMap<int, QString>* words,  QString &str, QMap<int, QString>* out);
+    static void replaceWithSynonims(QString &words, QMap<int, QString> *foundWords, const QStringList &synonims);
+    static void createWordsMap(QMap<int, QString>* wordsMap, QString &words);
 };
 
 #endif // UTILS_H
