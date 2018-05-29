@@ -23,12 +23,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     filesubwindow.cpp \
-    synonimsubwindow.cpp
+    synonimsubwindow.cpp \
+    utils.cpp
 
 HEADERS += \
         mainwindow.h \
     filesubwindow.h \
-    synonimsubwindow.h
+    synonimsubwindow.h \
+    utils.h
 
 FORMS += \
         mainwindow.ui \

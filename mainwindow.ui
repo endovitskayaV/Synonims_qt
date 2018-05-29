@@ -26,18 +26,36 @@
      <x>0</x>
      <y>0</y>
      <width>779</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>Fi&amp;le</string>
     </property>
-    <addaction name="actionSave"/>
+    <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
-    <addaction name="actionSynonim"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionsave_as"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="actionConstraints"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuActions">
+    <property name="title">
+     <string>A&amp;ctions</string>
+    </property>
+    <addaction name="actionMake_synonims"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuActions"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -50,17 +68,47 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSave">
    <property name="text">
-    <string>Save</string>
+    <string>&amp;Save</string>
    </property>
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>Open</string>
+    <string>&amp;Open</string>
    </property>
   </action>
   <action name="actionSynonim">
    <property name="text">
-    <string>Synonim</string>
+    <string>S&amp;ynonim</string>
+   </property>
+  </action>
+  <action name="actionConstraints">
+   <property name="text">
+    <string>Constraints</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionMake_synonims">
+   <property name="text">
+    <string>Make synonims</string>
+   </property>
+  </action>
+  <action name="actionsave_as">
+   <property name="text">
+    <string>Save as</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>
@@ -100,10 +148,74 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionSynonim</sender>
+   <sender>actionAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>about()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>312</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionMake_synonims</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>synonim()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>312</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionConstraints</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>constraints()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>312</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionsave_as</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveAs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>312</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionNew</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>newFile()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -120,5 +232,9 @@
   <slot>save()</slot>
   <slot>open()</slot>
   <slot>synonim()</slot>
+  <slot>about()</slot>
+  <slot>constraints()</slot>
+  <slot>saveAs()</slot>
+  <slot>newFile()</slot>
  </slots>
 </ui>

@@ -6,9 +6,7 @@
 #include <QMdiSubWindow>
 #include <filesubwindow.h>
 #include <QFileDialog>
-#include <string>
 #include <bits/stdc++.h>
-#include <QString>
 #include <QList>
 #include <QErrorMessage>
 #include <synonimsubwindow.h>
@@ -18,9 +16,10 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <stdio.h>
+#include "utils.h"
 
 
-using namespace std;
 
 namespace Ui {
 class MainWindow;
@@ -36,17 +35,19 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    string readFile(const string &path);
     void showNewFileSubWindow(const QString &text, const QString &title);
-    void showErrorDialog(const QString &text);
-    void saveToFile(const QString &path, const QString &text);
-    void makeSynonims(QString words, QString synonims);
+    void showMessageDialog(const QString &text);
     const QString& setSubWindowTitle(const QString &desiredTitle);
+    void makeSynonims(QString words, QString synonims);
 
 private slots:
     void save();
+    void saveAs();
     void open();
+    void newFile();
     void synonim();
+    void about();
+    void constraints();
 };
 
 

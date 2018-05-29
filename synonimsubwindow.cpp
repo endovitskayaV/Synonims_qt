@@ -12,12 +12,10 @@ SynonimSubWindow::SynonimSubWindow(QWidget *parent, QList<QMdiSubWindow*> window
     }
 }
 int SynonimSubWindow::getChosenWordsIndex() {
-    std::cout << "w"<<ui->wordsComboBox->currentIndex()<< std::endl;
     return ui->wordsComboBox->currentIndex();
 }
 
 int SynonimSubWindow::getChosenSynonimsIndex() {
-    std::cout << "syn"<<ui->synonimsComboBox->currentIndex()<< std::endl;
     return ui->synonimsComboBox->currentIndex();
 }
 
