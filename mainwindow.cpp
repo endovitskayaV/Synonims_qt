@@ -137,7 +137,7 @@ void MainWindow::synonim() {
 }
 
 void MainWindow::constraints(){
-    showMessageDialog("Words file: word1, word2, ... wordN. Synonims file: syn1.1, sys1.2; ... synN.M");
+    showMessageDialog("Synonims file: syn1, syn2, syn3, ...");
     Utils::log("'Constraints' opened");
 }
 
@@ -147,30 +147,55 @@ void MainWindow::about(){
 }
 
 void MainWindow::makeSynonims(QString words, QString synonims){
-   QStringList wordsList= words.split(",");
-   QStringList synonimsList=synonims.split(";");
-   if (! Utils::isValid(wordsList,synonimsList)){
-       showMessageDialog("Failed making synonims-incorrect input file. See Help");
-       Utils::log("Failed making synonims-incorrect input file");
-       return;
-   }
-   QStringList resList;
 
-   if (wordsList.size()==1){
-       QStringList concreteSynonims= synonimsList.at(0).split(",");
-       if (concreteSynonims.size()!=0)
-          resList.append(concreteSynonims.at(0));
-   }else{
+    QMap<int, QString> wordsMap=QMap<int, QString>();
+    QStringList symb={",", ".", " ", "!", "'", "...", "?", "/", "(", ")"};
 
-   for (int i=0; i<wordsList.size(); i++) {
-     QStringList concreteSynonims= synonimsList.at(i).split(",");
-     int index=rand() % ((concreteSynonims.size() + 1));
-     resList.append(concreteSynonims.at(index));
+    int index;
+    QString w;
+    int i=0;
+    while(i<words.size()){
+        while (i<words.size() && symb.contains(words.at(i))){
+            i++;
+         }
 
-   }
-   }
+        if (i<words.size()){
+            index=i;
+            w.clear();
+            while (i<words.size() && !symb.contains(words.at(i))){
+                w.append(words.at(i));
+                i++;
+             }
+          wordsMap.insert(index, w);
+        }
+    }
+
+    QStringList synonimsList=synonims.split("\n");
+
+    for (int i=0; i<synonimsList.size(); i++) {
+
+        QStringList concreteSynonims=synonimsList[i].split(",");
+        QMap<int, QString> *foundWords = new QMap<int, QString>();
+        for (int j=0; j<concreteSynonims.size(); j++) {
+            QString syn=concreteSynonims.at(j);
+            syn=syn.simplified();
+            Utils::findAll(wordsMap,syn, foundWords);
+        }
+        replaceWithSynonims(words, foundWords, concreteSynonims);
+    }
+
+
    Utils::log("Synonims made");
-   showNewFileSubWindow(resList.join(","), "result");
+   showNewFileSubWindow(words, "result");
 
 }
 
+void MainWindow::replaceWithSynonims(QString &words, QMap<int, QString> *foundWords, const QStringList &synonims) {
+    for (int key : foundWords->keys()) {
+        int chosenSynonimIndex = 0;
+        do {
+            chosenSynonimIndex=rand() % ((synonims.size()));
+        } while (synonims[chosenSynonimIndex] == foundWords->value(key));
+        words.replace(key, foundWords->value(key).size(), synonims[chosenSynonimIndex]);
+    }
+}

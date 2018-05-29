@@ -28,10 +28,11 @@ class Utils
 public:
     static const string currentDateTime();
     static void log(const string &text);
-    static bool isValid(QStringList &wordsList, QStringList &synonimsList);
     static void removeEmpty(QStringList &list);
     static string readFile(const string &path);
     static void saveToFile(const QString &path, const QString &text);
+    static void findAll(QMap<int, QString>& words,  QString &str, QMap<int, QString>* out);
+
 };
 
 #endif // UTILS_H

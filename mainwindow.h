@@ -39,6 +39,7 @@ private:
     void showMessageDialog(const QString &text);
     const QString& setSubWindowTitle(const QString &desiredTitle);
     void makeSynonims(QString words, QString synonims);
+    void replaceWithSynonims(QString &words, QMap<int, QString> *foundWords, const QStringList &synonims);
 
 private slots:
     void save();

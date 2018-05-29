@@ -34,28 +34,12 @@
         return buffer.str();
     }
 
-    bool Utils::isValid(QStringList &wordsList, QStringList &synonimsList){
-        removeEmpty(wordsList);
-        removeEmpty(synonimsList);
-
-        if (wordsList.size()!=synonimsList.size()){return false;}
-        if (wordsList.size()==0){return false;}
-        if (wordsList.size()==1){
-            QStringList concreteSynonims= synonimsList.at(0).split(",");
-            removeEmpty(concreteSynonims);
-            if (concreteSynonims.size()==0) return false;
-
-    }
-        return true;
-    }
-
-    void Utils::removeEmpty(QStringList &list){
-            int i=0;
-            while (i<list.size()) {
-                if(list.at(i)=="") {
-                    list.removeAt(i);
-                }else{
-                    i++;
-                }
+    void Utils::findAll(QMap<int, QString>& words,  QString &str, QMap<int, QString>* out) {
+        for (int key : words.keys()) {
+            if (words.value(key)==str){
+                out->insert(key, str);
             }
         }
+    }
+
+
