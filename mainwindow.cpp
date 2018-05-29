@@ -160,6 +160,7 @@ void MainWindow::makeSynonims(QString words, QString synonims){
         for (int j=0; j<concreteSynonims.size(); j++) {
             QString syn=concreteSynonims.at(j);
             syn=syn.simplified();
+            concreteSynonims.replace(j,syn);
             Utils::findAll(wordsMap,syn, foundWords);
         }
         Utils::replaceWithSynonims(words, foundWords, concreteSynonims);
