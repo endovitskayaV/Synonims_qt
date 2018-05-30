@@ -162,6 +162,7 @@ void MainWindow::makeSynonims(QString words, QString synonims){
             Utils::findAll(wordsMap,syn, foundWords);
         }
         Utils::replaceWithSynonims(words, foundWords, concreteSynonims);
+        wordsMap=new QMap<int, QString>();
         Utils::createWordsMap(wordsMap,words);
     }
 

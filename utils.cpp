@@ -43,12 +43,14 @@
     }
 
     void Utils::replaceWithSynonims(QString &words, QMap<int, QString> *foundWords, const QStringList &synonims) {
+        int offset=0;
         for (int key : foundWords->keys()) {
             int chosenSynonimIndex = 0;
             do {
                 chosenSynonimIndex=rand() % ((synonims.size()));
             } while (synonims[chosenSynonimIndex] == foundWords->value(key));
-            words.replace(key, foundWords->value(key).size(), synonims[chosenSynonimIndex]);
+            words.replace(key+offset, foundWords->value(key).size(), synonims[chosenSynonimIndex]);
+             offset+=foundWords->value(key).size()-((QString)synonims[chosenSynonimIndex]).size();
         }
     }
 
