@@ -147,12 +147,10 @@ void MainWindow::about(){
 }
 
 void MainWindow::makeSynonims(QString words, QString synonims){
-
     QMap<int, QString> *wordsMap=new QMap<int, QString>();
     Utils::createWordsMap(wordsMap,words);
 
     QStringList synonimsList=synonims.split("\n");
-
     for (int i=0; i<synonimsList.size(); i++) {
 
         QStringList concreteSynonims=synonimsList[i].split(",");
@@ -164,6 +162,7 @@ void MainWindow::makeSynonims(QString words, QString synonims){
             Utils::findAll(wordsMap,syn, foundWords);
         }
         Utils::replaceWithSynonims(words, foundWords, concreteSynonims);
+        Utils::createWordsMap(wordsMap,words);
     }
 
    Utils::log("Synonims made");
