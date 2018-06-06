@@ -137,7 +137,7 @@ void MainWindow::synonim() {
 }
 
 void MainWindow::constraints(){
-    showMessageDialog("Words file: word1, word2, ... wordN. Synonims file: syn1.1, sys1.2; ... synN.M");
+    showMessageDialog("Synonims file: syn1, syn2, syn3, ...");
     Utils::log("'Constraints' opened");
 }
 
@@ -147,30 +147,28 @@ void MainWindow::about(){
 }
 
 void MainWindow::makeSynonims(QString words, QString synonims){
-   QStringList wordsList= words.split(",");
-   QStringList synonimsList=synonims.split(";");
-   if (! Utils::isValid(wordsList,synonimsList)){
-       showMessageDialog("Failed making synonims-incorrect input file. See Help");
-       Utils::log("Failed making synonims-incorrect input file");
-       return;
-   }
-   QStringList resList;
+    QMap<int, QString> *wordsMap=new QMap<int, QString>();
+    Utils::createWordsMap(wordsMap,words);
 
-   if (wordsList.size()==1){
-       QStringList concreteSynonims= synonimsList.at(0).split(",");
-       if (concreteSynonims.size()!=0)
-          resList.append(concreteSynonims.at(0));
-   }else{
+    QStringList synonimsList=synonims.split("\n");
+    for (int i=0; i<synonimsList.size(); i++) {
 
-   for (int i=0; i<wordsList.size(); i++) {
-     QStringList concreteSynonims= synonimsList.at(i).split(",");
-     int index=rand() % ((concreteSynonims.size() + 1));
-     resList.append(concreteSynonims.at(index));
+        QStringList concreteSynonims=synonimsList[i].split(",");
+        QMap<int, QString> *foundWords = new QMap<int, QString>();
+        for (int j=0; j<concreteSynonims.size(); j++) {
+            QString syn=concreteSynonims.at(j);
+            syn=syn.simplified();
+            concreteSynonims.replace(j,syn);
+            Utils::findAll(wordsMap,syn, foundWords);
+        }
+        Utils::replaceWithSynonims(words, foundWords, concreteSynonims);
+        wordsMap=new QMap<int, QString>();
+        Utils::createWordsMap(wordsMap,words);
+    }
 
-   }
-   }
    Utils::log("Synonims made");
-   showNewFileSubWindow(resList.join(","), "result");
+   showNewFileSubWindow(words, "result");
 
 }
+
 

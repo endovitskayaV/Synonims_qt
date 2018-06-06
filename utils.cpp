@@ -34,28 +34,46 @@
         return buffer.str();
     }
 
-    bool Utils::isValid(QStringList &wordsList, QStringList &synonimsList){
-        removeEmpty(wordsList);
-        removeEmpty(synonimsList);
-
-        if (wordsList.size()!=synonimsList.size()){return false;}
-        if (wordsList.size()==0){return false;}
-        if (wordsList.size()==1){
-            QStringList concreteSynonims= synonimsList.at(0).split(",");
-            removeEmpty(concreteSynonims);
-            if (concreteSynonims.size()==0) return false;
-
-    }
-        return true;
-    }
-
-    void Utils::removeEmpty(QStringList &list){
-            int i=0;
-            while (i<list.size()) {
-                if(list.at(i)=="") {
-                    list.removeAt(i);
-                }else{
-                    i++;
-                }
+    void Utils::findAll(QMap<int, QString>* words,  QString &str, QMap<int, QString>* out) {
+        for (int key : words->keys()) {
+            if (words->value(key)==str){
+                out->insert(key, str);
             }
         }
+    }
+
+    void Utils::replaceWithSynonims(QString &words, QMap<int, QString> *foundWords, const QStringList &synonims) {
+        int offset=0;
+        for (int key : foundWords->keys()) {
+            int chosenSynonimIndex = 0;
+            do {
+                chosenSynonimIndex=rand() % ((synonims.size()));
+            } while (synonims[chosenSynonimIndex] == foundWords->value(key));
+            words.replace(key+offset, foundWords->value(key).size(), synonims[chosenSynonimIndex]);
+             offset+=foundWords->value(key).size()-((QString)synonims[chosenSynonimIndex]).size();
+        }
+    }
+
+    void Utils::createWordsMap(QMap<int, QString>* wordsMap, QString &words){
+        QStringList symb={",", ".", " ", "!", "'", "...", "?", "/", "(", ")"};
+
+        int index;
+        QString w;
+        int i=0;
+        while(i<words.size()){
+            while (i<words.size() && symb.contains(words.at(i))){
+                i++;
+             }
+
+            if (i<words.size()){
+                index=i;
+                w.clear();
+                while (i<words.size() && !symb.contains(words.at(i))){
+                    w.append(words.at(i));
+                    i++;
+                 }
+              wordsMap->insert(index, w);
+            }
+        }
+
+    }
